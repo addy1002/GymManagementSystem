@@ -3,16 +3,17 @@ from flask_mysqldb import MySQL
 from wtforms import Form, StringField, TextAreaField, PasswordField, validators, RadioField, SelectField, IntegerField
 from wtforms.fields.html5 import DateField
 from passlib.hash import sha256_crypt
-from flask_script import Manager
 from functools import wraps
 from datetime import datetime
 
 app = Flask(__name__)
 
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'eswar@259522'
-app.config['MYSQL_DB'] = 'Gym'
+import os
+
+app.config['MYSQL_HOST'] = os.environ.get('MYSQL_HOST', 'localhost')
+app.config['MYSQL_USER'] = os.environ.get('MYSQL_USER', 'root')
+app.config['MYSQL_PASSWORD'] = os.environ.get('MYSQL_PASSWORD', 'eswar@259522')
+app.config['MYSQL_DB'] = os.environ.get('MYSQL_DB', 'Gym')
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
 mysql = MySQL(app)
@@ -687,11 +688,7 @@ def logout():
 	flash('You are now logged out', 'success')
 	return redirect(url_for('login'))
 
-
 if __name__ == "__main__":
-	app.secret_key = '528491@JOKER'
-	app.debug = True
-	manager = Manager(app)
-	#manager.secret_key = '528491@siva'
-	manager.run()
-	#app.run()
+        app.secret_key = '528491@JOKER'
+        app.debug = True
+        app.run(host='0.0.0.0', port=5000)
