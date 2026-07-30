@@ -2,7 +2,6 @@ FROM python:3.9-slim
 
 WORKDIR /app
 
-# mysqlclient needs these build deps
 RUN apt-get update && apt-get install -y \
     build-essential \
     default-libmysqlclient-dev \
